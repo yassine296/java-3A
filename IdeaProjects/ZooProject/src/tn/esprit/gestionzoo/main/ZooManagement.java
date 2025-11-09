@@ -1,45 +1,36 @@
 package tn.esprit.gestionzoo.main;
-
 import tn.esprit.gestionzoo.entities.*;
+import tn.esprit.gestionzoo.exceptions.*;
 
 public class ZooManagement {
     public static void main(String[] args) {
         Zoo myZoo = new Zoo("Safari Park", "Tunis");
 
-        // Animaux terrestres
-        Animal lion = new Animal("Félidé", "Lion", 5, true);
-        Animal tiger = new Animal("Félidé", "Tigre", 3, true);
+        try {
+            // Test ZooFullException
+            Animal lion = new Animal("Félidé", "Lion", 5, true);
+            Animal tiger = new Animal("Félidé", "Tigre", 3, true);
+            Animal bear = new Animal("Ursidé", "Ours", 8, true);
+            Animal wolf = new Animal("Canidé", "Loup", 4, true); // Va échouer
 
-        myZoo.addAnimal(lion);
-        myZoo.addAnimal(tiger);
+            myZoo.addAnimal(lion);
+            myZoo.addAnimal(tiger);
+            myZoo.addAnimal(bear);
+            myZoo.addAnimal(wolf); // Lève ZooFullException
 
-        // INSTRUCTION 26 : Animaux aquatiques
-        Dolphin dolphin1 = new Dolphin("Cétacés", "Flipper", 7, true, "Océan", 45.5f);
-        Dolphin dolphin2 = new Dolphin("Cétacés", "Dolly", 5, true, "Océan", 40.0f);
-        Penguin penguin1 = new Penguin("Oiseaux", "Pingou", 2, true, "Antarctique", 30.0f);
-        Penguin penguin2 = new Penguin("Oiseaux", "Pingou", 2, true, "Antarctique", 30.0f); // Test equals
-        Penguin penguin3 = new Penguin("Oiseaux", "Glacius", 4, true, "Arctique", 50.0f);
+        } catch (ZooFullException e) {
+            System.out.println("ERREUR: " + e.getMessage());
+        } catch (InvalidAgeException e) {
+            System.out.println("ERREUR ÂGE: " + e.getMessage());
+        } finally {
+            System.out.println("Nombre d'animaux: " + myZoo.getAnimalCount());
+        }
 
-        myZoo.addAquaticAnimal(dolphin1);
-        myZoo.addAquaticAnimal(dolphin2);
-        myZoo.addAquaticAnimal(penguin1);
-        myZoo.addAquaticAnimal(penguin2);
-        myZoo.addAquaticAnimal(penguin3);
-
-        // INSTRUCTION 27 : Faire nager tous les aquatiques
-        myZoo.makeAllAquaticsSwim();
-
-        // INSTRUCTION 29 : Profondeur maximale
-        System.out.println("\nProfondeur maximale des pingouins : " + myZoo.maxPenguinSwimmingDepth() + " mètres");
-
-        // INSTRUCTION 30 : Statistiques par type
-        myZoo.displayNumberOfAquaticsByType();
-
-        // INSTRUCTION 31 : Test de la méthode equals
-        System.out.println("\n=== Test de la méthode equals() ===");
-        System.out.println("penguin1 equals penguin2 : " + penguin1.equals(penguin2)); // true
-        System.out.println("penguin1 equals penguin3 : " + penguin1.equals(penguin3)); // false
-
-        myZoo.displayAnimals();
+        // Test InvalidAgeException
+        try {
+            Animal invalid = new Animal("Test", "Invalid", -5, true);
+        } catch (InvalidAgeException e) {
+            System.out.println("ERREUR: " + e.getMessage());
+        }
     }
 }
