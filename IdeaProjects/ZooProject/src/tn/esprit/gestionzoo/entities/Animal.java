@@ -22,5 +22,31 @@ public class Animal {
         this.age = age;
     }
 
-    // Autres méthodes...
+    public String getFamily() {
+        return family;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public boolean isMammal() {
+        return isMammal;
+    }
+
+    public void setMammal(boolean mammal) {
+        isMammal = mammal;
+    }
 }

@@ -4,33 +4,32 @@ import tn.esprit.gestionzoo.exceptions.*;
 
 public class ZooManagement {
     public static void main(String[] args) {
-        Zoo myZoo = new Zoo("Safari Park", "Tunis");
-
         try {
-            // Test ZooFullException
-            Animal lion = new Animal("Félidé", "Lion", 5, true);
-            Animal tiger = new Animal("Félidé", "Tigre", 3, true);
-            Animal bear = new Animal("Ursidé", "Ours", 8, true);
-            Animal wolf = new Animal("Canidé", "Loup", 4, true); // Va échouer
+            // Tests Prosit 8
+            System.out.println("=== PROSIT 8 TESTS ===");
 
-            myZoo.addAnimal(lion);
-            myZoo.addAnimal(tiger);
-            myZoo.addAnimal(bear);
-            myZoo.addAnimal(wolf); // Lève ZooFullException
+            // Création des objets
+            Dolphin dolphin = new Dolphin("Cétacés", "Flipper", 7, true, "Océan", 45.5f);
+            Penguin penguin = new Penguin("Oiseaux", "Pingou", 2, true, "Antarctique", 30.0f);
+            Terrestrial bear = new Terrestrial("Ursidé", "Ours", 8, true, 4);
 
-        } catch (ZooFullException e) {
-            System.out.println("ERREUR: " + e.getMessage());
+            // Tests des méthodes Carnivore/Omnivore
+            System.out.println("\n--- Tests Dolphin (Carnivore) ---");
+            dolphin.eatMeat(Food.MEAT);
+            dolphin.eatMeat(Food.PLANT);
+
+            System.out.println("\n--- Tests Penguin (Carnivore) ---");
+            penguin.eatMeat(Food.MEAT);
+            penguin.eatMeat(Food.BOTH);
+
+            System.out.println("\n--- Tests Bear (Omnivore) ---");
+            bear.eatMeat(Food.MEAT);
+            bear.eatPlant(Food.PLANT);
+            bear.eatPlantAndMeat(Food.BOTH);
+            bear.eatPlantAndMeat(Food.MEAT);
+
         } catch (InvalidAgeException e) {
-            System.out.println("ERREUR ÂGE: " + e.getMessage());
-        } finally {
-            System.out.println("Nombre d'animaux: " + myZoo.getAnimalCount());
-        }
-
-        // Test InvalidAgeException
-        try {
-            Animal invalid = new Animal("Test", "Invalid", -5, true);
-        } catch (InvalidAgeException e) {
-            System.out.println("ERREUR: " + e.getMessage());
+            System.out.println("Erreur d'âge: " + e.getMessage());
         }
     }
 }
